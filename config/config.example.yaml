@@ -1,0 +1,54 @@
+# WeChat LLM Proxy Configuration Example
+# Copy this file to config/config.yaml and fill in your API keys
+
+wechat:
+  # iLink Bot API base URL (do not change)
+  base_url: "https://ilinkai.weixin.qq.com"
+  bot_type: 3
+  channel_version: "1.0.2"
+  # Local file path for bot token (will be auto-created after first login)
+  token_file: "./data/bot_token.json"
+
+# Whitelist control - restrict who can use this proxy
+whitelist:
+  enabled: false  # Set to true to enable whitelist
+  users:
+    - "user_id_1@im.wechat"
+    # Add more users as needed
+  reject_message: "暂未开放，请联系管理员"  # Message sent to unauthorized users
+
+# Model configuration - define which LLM adapters to use
+models:
+  # Default adapter when no model is specified
+  default: "anthropic_native"
+  # Fallback order if primary adapter fails
+  fallback_order:
+    - "anthropic_native"
+
+  # Model aliases - users can type these shortcuts in WeChat
+  aliases:
+    haiku:  { adapter: "anthropic_native", model: "claude-haiku-4-5-20251001" }
+    sonnet: { adapter: "anthropic_native", model: "claude-sonnet-4-6" }
+    opus:   { adapter: "anthropic_native", model: "claude-opus-4-5" }
+
+# LLM Adapter definitions
+adapters:
+  anthropic_native:
+    type: "anthropic_native"
+    base_url: "https://api.anthropic.com"
+    # Use environment variable: export ANTHROPIC_API_KEY="sk-ant-..."
+    api_key: "${ANTHROPIC_API_KEY}"
+    default_model: "claude-haiku-4-5-20251001"
+
+# Session management
+session:
+  timeout_minutes: 30          # How long to keep conversation history
+  max_history_messages: 20     # Maximum messages to keep in context
+
+# Message streaming chunker settings
+chunker:
+  min_chars: 50                # Minimum chars before sending a chunk
+  max_chars: 500               # Maximum chars per chunk
+  interval_seconds: 2.5        # Wait time before sending incomplete chunks
+  code_block_whole: true       # Keep code blocks together
+  show_thinking: false         # Show Claude's thinking (if available)

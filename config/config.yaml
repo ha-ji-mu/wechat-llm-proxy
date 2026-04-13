@@ -1,0 +1,39 @@
+wechat:
+  base_url: "https://ilinkai.weixin.qq.com"
+  bot_type: 3
+  channel_version: "1.0.2"
+  token_file: "./data/bot_token.json"
+
+whitelist:
+  enabled: false
+  users:
+    - "user_id_1@im.wechat"
+  reject_message: "暂未开放，请联系管理员"
+
+models:
+  default: "anthropic_native"
+  fallback_order:
+    - "anthropic_native"
+
+  aliases:
+    haiku:  { adapter: "anthropic_native", model: "claude-haiku-4-5-20251001" }
+    sonnet: { adapter: "anthropic_native", model: "claude-sonnet-4-6" }
+    opus:   { adapter: "anthropic_native", model: "claude-opus-4-5" }
+
+adapters:
+  anthropic_native:
+    type: "anthropic_native"
+    base_url: "https://api.anthropic.com"
+    api_key: "${ANTHROPIC_API_KEY}"
+    default_model: "claude-haiku-4-5-20251001"
+
+session:
+  timeout_minutes: 30
+  max_history_messages: 20
+
+chunker:
+  min_chars: 50
+  max_chars: 500
+  interval_seconds: 2.5
+  code_block_whole: true
+  show_thinking: false

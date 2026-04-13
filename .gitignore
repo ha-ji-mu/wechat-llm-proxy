@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Runtime data — tokens, cookies, logs — never commit
+data/
+config/config.yaml
+
+# Pytest
+.pytest_cache/
+
+# Claude Code local data
+.claude/
+
+# Gitignore itself (prevent uploading to public repo)
+.gitignore
